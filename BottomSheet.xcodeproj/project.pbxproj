@@ -16,6 +16,7 @@
 		0377F61E2ABA3F5200E3013B /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0377F61D2ABA3F5200E3013B /* BottomSheetViewController.swift */; };
 		0377F6202ABA417A00E3013B /* PresentedSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0377F61F2ABA417A00E3013B /* PresentedSheetViewController.swift */; };
 		0377F6222ABA458900E3013B /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0377F6212ABA458900E3013B /* SheetView.swift */; };
+		03F61EBE2AC74F2C005DC7FD /* BottomSheetProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F61EBD2AC74F2C005DC7FD /* BottomSheetProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		0377F61D2ABA3F5200E3013B /* BottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewController.swift; sourceTree = "<group>"; };
 		0377F61F2ABA417A00E3013B /* PresentedSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentedSheetViewController.swift; sourceTree = "<group>"; };
 		0377F6212ABA458900E3013B /* SheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetView.swift; sourceTree = "<group>"; };
+		03F61EBD2AC74F2C005DC7FD /* BottomSheetProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 				0377F6212ABA458900E3013B /* SheetView.swift */,
 				0377F61F2ABA417A00E3013B /* PresentedSheetViewController.swift */,
 				0377F61D2ABA3F5200E3013B /* BottomSheetViewController.swift */,
+				03F61EBD2AC74F2C005DC7FD /* BottomSheetProtocol.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -156,6 +159,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0377F5E72ABA3EB000E3013B /* ViewController.swift in Sources */,
+				03F61EBE2AC74F2C005DC7FD /* BottomSheetProtocol.swift in Sources */,
 				0377F5E32ABA3EB000E3013B /* AppDelegate.swift in Sources */,
 				0377F5E52ABA3EB000E3013B /* SceneDelegate.swift in Sources */,
 				0377F6202ABA417A00E3013B /* PresentedSheetViewController.swift in Sources */,

@@ -21,6 +21,7 @@ public class BottomSheetViewController: UIPresentationController {
         .init(target: self, action: #selector(BottomSheetViewController.handlePanGesture))
     }()
 
+    // Update the frame of presented view to fit in your sheet
     public override var frameOfPresentedViewInContainerView: CGRect {
         guard let presentedView = presentedView, let containerView = containerView else { return .zero }
         let size = presentedView.systemLayoutSizeFitting(
@@ -31,11 +32,11 @@ public class BottomSheetViewController: UIPresentationController {
         return .init(x: 0, y: (containerView.bounds.height - size.height), width: size.width, height: size.height)
     }
 
-    private var presentedViewOriginalFrame: CGRect = .zero
-    private let edges: UIEdgeInsets
-    private let sheetGestures: [UIGestureRecognizer]
-    private var isShowingKeyboard = false
-    private var startOrigin = CGPoint(x: 0, y: 0)
+    private var presentedViewOriginalFrame: CGRect = .zero // save the frame to keep the original reference
+    private let edges: UIEdgeInsets // to margins
+    private let sheetGestures: [UIGestureRecognizer] // previous gestures in your sheet
+    private var isShowingKeyboard = false // controll keyboard display
+    private var startOrigin = CGPoint(x: 0, y: 0) // to keep the origin of drag in pan gesture
 
     // MARK: Initialization
 
@@ -57,8 +58,9 @@ public class BottomSheetViewController: UIPresentationController {
 
     public override func containerViewDidLayoutSubviews() {
         super.containerViewDidLayoutSubviews()
+        // We don't want update frame in case of show/hide keyboard, we have a specific function to do this
         guard !isShowingKeyboard else { return }
-        presentedView?.frame = frameOfPresentedViewInContainerView
+        presentedView?.frame = frameOfPresentedViewInContainerView // to keep frame updated
     }
 
     public override func presentationTransitionWillBegin() {
@@ -85,6 +87,7 @@ public class BottomSheetViewController: UIPresentationController {
     private func addGestures() {
         blurView.addGestureRecognizer(tapGesture)
         presentedView?.addGestureRecognizer(panGesture)
+        // If have previous gestures in the sheet, it's necessary establish a priority between then
         sheetGestures.forEach { panGesture.require(toFail: $0) }
     }
 
@@ -131,12 +134,12 @@ public class BottomSheetViewController: UIPresentationController {
     @objc private func handlePanGesture(_ pan: UIPanGestureRecognizer) {
         guard let view = pan.view, let superView = view.superview else { return }
         let location = pan.location(in: superView)
-        let minHeight = presentedViewOriginalFrame.height/4
-        let remainingHeight = UIScreen.main.bounds.height - location.y
+        let minHeight = presentedViewOriginalFrame.height/4 // minimum height that define show or hide bottom sheet
+        let remainingHeight = UIScreen.main.bounds.height - location.y // remaining height in container view considering current location
 
         switch pan.state {
         case .began:
-            startOrigin = location
+            startOrigin = location // save the starting point of the gesture
         case .changed:
             drag(to: location)
         case .ended:
@@ -152,7 +155,7 @@ public class BottomSheetViewController: UIPresentationController {
     private func drag(to location: CGPoint) {
         if location.y > startOrigin.y {
             let movement = location.y - startOrigin.y
-            let yPosition = presentedViewOriginalFrame.origin.y + movement
+            let yPosition = presentedViewOriginalFrame.origin.y + movement // current position + drag movement
             presentedView?.frame.origin.y = yPosition
         }
     }
@@ -182,13 +185,13 @@ public class BottomSheetViewController: UIPresentationController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillShow(notification:)),
-            name: UIResponder.keyboardWillShowNotification ,
+            name: UIResponder.keyboardWillShowNotification,
             object: nil
         )
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillHide(notification:)),
-            name: UIResponder.keyboardWillHideNotification ,
+            name: UIResponder.keyboardWillHideNotification,
             object: nil
         )
     }
@@ -205,8 +208,8 @@ public class BottomSheetViewController: UIPresentationController {
         guard !isShowingKeyboard, let keyboardHeight else { return }
 
         isShowingKeyboard = true
-        presentedView?.frame.size.height -= getBottomSafeAreaHeight()
-        presentedView?.frame.origin.y -= (keyboardHeight - getBottomSafeAreaHeight())
+        presentedView?.frame.size.height -= getBottomSafeAreaHeight() // remove safe area spacing
+        presentedView?.frame.origin.y -= (keyboardHeight - getBottomSafeAreaHeight()) // move y origin to the top of keyboard
     }
 
     @objc func keyboardWillHide(notification: NSNotification) {
