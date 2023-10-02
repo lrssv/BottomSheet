@@ -1,4 +1,4 @@
-# BottomSheet componente using UIPresentationController
+# BottomSheet component using UIPresentationController
 ![ezgif com-resize](https://github.com/lrssv/BottomSheet/assets/62406351/5e1ceec6-ba71-4057-8b6a-7385e78e1514)
 
 This is a simple way to build a bottom sheet component in your swift project. We use `UIPresentationController(iOS 8.0+)` to customize the view controller apresentation. 
